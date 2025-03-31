@@ -1,5 +1,7 @@
 package com.example.FreeLynk.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,7 @@ import com.example.FreeLynk.service.UserService;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-    
+
     @Autowired
     private UserService userService;
 
@@ -32,6 +34,12 @@ public class UserController {
     public ResponseEntity<User> getUserProfile(@PathVariable Long userId) {
         // Add logic to fetch and return user profile
         return ResponseEntity.ok(userService.getUserProfile(userId));
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<User>> getAllUsers(){
+        List<User> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 
     

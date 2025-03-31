@@ -1,5 +1,7 @@
 package com.example.FreeLynk.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,14 @@ public class UserService {
             throw new ResourceAlreadyExistException("User already exists with this ID");
         }
         return userRepository.save(user);
+    }
+
+    public List<User> getAllUsers(){
+        List<User> users = userRepository.findAll();
+        if (users.isEmpty()){
+            throw new ResourceNotFoundException("No users found");
+        }
+        return users;
     }
 
 }
