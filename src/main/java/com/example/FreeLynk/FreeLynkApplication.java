@@ -8,6 +8,7 @@ public class FreeLynkApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FreeLynkApplication.class, args);
+		System.out.println("Hello World");
 	}
 
 }

@@ -13,15 +13,18 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -33,22 +36,20 @@ public class User {
     private String email;
 
     @Enumerated(EnumType.STRING)
+    @Column()
     private UserRole role;
 
-    @Column(nullable = true)
+    @Column()
     private String profilePictureUrl;
 
-    @Column(nullable = true)
+    @Column()
     private String bio;
 
-    @Column(nullable = true)
+    @Column()
     private List<String> skills;
 
-    @Column(nullable = true)
+    @Column()
     private double rating = 0.0;
-
-
-
 
     
 }
