@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,6 +42,19 @@ public class UserController {
     public ResponseEntity<List<User>> getAllUsers(){
         List<User> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<User> updateUserProfile(@PathVariable Long userId, @RequestBody User user) {
+        // Add logic to update user profile
+        User updatedUser = userService.updateUserProfile(userId, user);
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    @PatchMapping("/{userId}")
+    public ResponseEntity<User> UpdateUserProfileSpecificFields(@PathVariable Long userId, @RequestBody User user){
+        User updatedUser = userService.UpdateUserProfileSpecificFields(userId,user);
+        return new ResponseEntity<>(updatedUser,HttpStatus.ACCEPTED);
     }
 
     
