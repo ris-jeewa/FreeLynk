@@ -42,9 +42,9 @@ public class Job {
     private Long clientId;
 
     @Column
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column
-    private LocalDateTime updatedAt;
-    
+    private LocalDateTime updatedAt = LocalDateTime.now();
+
 }
