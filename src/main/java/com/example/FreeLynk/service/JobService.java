@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.example.FreeLynk.exception.ResourceAlreadyExistException;
 import com.example.FreeLynk.exception.ResourceNotFoundException;
 import com.example.FreeLynk.model.Job;
 import com.example.FreeLynk.repository.JobRepository;

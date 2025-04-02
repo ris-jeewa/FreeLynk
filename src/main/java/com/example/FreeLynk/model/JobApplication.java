@@ -1,6 +1,5 @@
 package com.example.FreeLynk.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.example.FreeLynk.enums.JobAppStatus;
@@ -28,24 +27,23 @@ public class JobApplication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column()
     private Long jobId;
 
-    @Column(nullable = false)
+    @Column()
     private Long freelancerId;
 
-    @Column
+    @Column()
     private String proposal;
 
-    @Column
+    @Column()
     private Double bidAmount;
 
-    @Column
-    private JobAppStatus status;
+    @Column()
+    private JobAppStatus status = JobAppStatus.PENDING;
 
-    @Column 
-    private LocalDateTime appliedAt;
+    @Column()
+    private LocalDateTime appliedAt = LocalDateTime.now();
 
-
-    
 }
+

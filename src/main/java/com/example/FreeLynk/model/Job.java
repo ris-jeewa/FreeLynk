@@ -36,7 +36,7 @@ public class Job {
     private Double budget;
 
     @Column
-    private TaskStatus status;
+    private TaskStatus status = TaskStatus.OPEN;
 
     @Column
     private Long clientId;
