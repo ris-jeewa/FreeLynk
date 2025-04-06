@@ -27,9 +27,6 @@ public class UserService {
     }
 
     public User createUserProfile(User user){
-        if (userRepository.findById(user.getId()).isPresent()) {
-            throw new ResourceAlreadyExistException("User already exists with this ID");
-        }
         return userRepository.save(user);
     }
 
