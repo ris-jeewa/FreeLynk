@@ -4,24 +4,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.FreeLynk.exception.ResourceNotFoundException;
-import com.example.FreeLynk.model.Job;
 import com.example.FreeLynk.model.JobApplication;
 import com.example.FreeLynk.repository.JobAppRepository;
-import com.example.FreeLynk.repository.JobRepository;
-import com.example.FreeLynk.repository.UserRepository;
 
 @Service
 public class JobAppService {
     
     @Autowired
     private JobAppRepository jobAppRepository;
-    private UserRepository userRepository;
-    private JobRepository jobRepository;
 
 //     public JobApplication createJobApplication(JobApplication jobAppDetails){
 //         // if (!jobRepository.existsById(jobAppDetails.getJobId())){

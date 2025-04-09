@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-// import com.example.FreeLynk.dto.UserResponseDTO;
 import com.example.FreeLynk.model.User;
 import com.example.FreeLynk.service.UserService;
 
