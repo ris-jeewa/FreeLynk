@@ -52,6 +52,17 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
+    public User updateUserProfileImage(Long userId, String imageUrl) {
+        // Fetch existing user from the repository
+        User existingUser = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        
+        // Update the profile picture URL
+        existingUser.setProfilePictureUrl(imageUrl);
+        
+        // Save the updated user back to the repository
+        return userRepository.save(existingUser);
+    }
+
     public User UpdateUserProfileSpecificFields(Long UserId,User user){
         User existingUser = userRepository.findById(UserId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
         

@@ -51,6 +51,13 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
 
+    @PutMapping("/{userId}/image")
+    public ResponseEntity<User> updateUserProfileImage(@PathVariable Long userId, @RequestBody String imageUrl) {
+        // Add logic to update user profile image
+        User updatedUser = userService.updateUserProfileImage(userId, imageUrl);
+        return ResponseEntity.ok(updatedUser);
+    }
+
     @PatchMapping("/{userId}")
     public ResponseEntity<User> UpdateUserProfileSpecificFields(@PathVariable Long userId, @RequestBody User user){
         User updatedUser = userService.UpdateUserProfileSpecificFields(userId,user);
