@@ -42,14 +42,5 @@ public class User {
     @Column()
     private String profilePictureUrl;
 
-    @Column()
-    private String bio;
-
-    @Column()
-    private List<String> skills;
-
-    @Column()
-    private double rating = 0.0;
-
     
 }
