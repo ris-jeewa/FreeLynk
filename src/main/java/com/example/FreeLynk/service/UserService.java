@@ -44,9 +44,6 @@ public class UserService {
         existingUser.setName(user.getName());
         existingUser.setEmail(user.getEmail());
         existingUser.setProfilePictureUrl(user.getProfilePictureUrl());
-        existingUser.setBio(user.getBio());
-        existingUser.setSkills(user.getSkills());
-        existingUser.setRating(user.getRating());
         
         // Save the updated user back to the repository
         return userRepository.save(existingUser);
@@ -63,18 +60,18 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
-    public User UpdateUserProfileSpecificFields(Long UserId,User user){
-        User existingUser = userRepository.findById(UserId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    // public User UpdateUserProfileSpecificFields(Long UserId,User user){
+    //     User existingUser = userRepository.findById(UserId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
         
-        if (user.getName() != null)existingUser.setName(user.getName());
-        if (user.getEmail() != null)existingUser.setEmail(user.getEmail());
-        if (user.getBio() != null)existingUser.setBio(user.getBio());
-        if (user.getProfilePictureUrl() != null)existingUser.setProfilePictureUrl(user.getProfilePictureUrl());
-        if (user.getSkills() != null)existingUser.setSkills(user.getSkills());
-        if (user.getRating() != 0.0)existingUser.setRating(user.getRating());
+    //     if (user.getName() != null)existingUser.setName(user.getName());
+    //     if (user.getEmail() != null)existingUser.setEmail(user.getEmail());
+    //     if (user.getBio() != null)existingUser.setBio(user.getBio());
+    //     if (user.getProfilePictureUrl() != null)existingUser.setProfilePictureUrl(user.getProfilePictureUrl());
+    //     if (user.getSkills() != null)existingUser.setSkills(user.getSkills());
+    //     if (user.getRating() != 0.0)existingUser.setRating(user.getRating());
 
-        return userRepository.save(existingUser);
-    }
+    //     return userRepository.save(existingUser);
+    // }
 
     public void deleteUser(Long id){
         userRepository.deleteById(id);

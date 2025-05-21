@@ -58,11 +58,18 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
 
-    @PatchMapping("/{userId}")
-    public ResponseEntity<User> UpdateUserProfileSpecificFields(@PathVariable Long userId, @RequestBody User user){
-        User updatedUser = userService.UpdateUserProfileSpecificFields(userId,user);
-        return new ResponseEntity<>(updatedUser,HttpStatus.ACCEPTED);
-    }
+    // @PutMapping("/{userId}/aboutme")
+    // public ResponseEntity<User> updateUserProfileAboutMe(@PathVariable Long userId, @RequestBody String aboutMe) {
+    //     // Add logic to update user profile about me
+    //     User updatedUser = userService.updateUserProfileAboutMe(userId, aboutMe);
+    //     return ResponseEntity.ok(updatedUser);
+    // }
+
+    // @PatchMapping("/{userId}")
+    // public ResponseEntity<User> UpdateUserProfileSpecificFields(@PathVariable Long userId, @RequestBody User user){
+    //     User updatedUser = userService.UpdateUserProfileSpecificFields(userId,user);
+    //     return new ResponseEntity<>(updatedUser,HttpStatus.ACCEPTED);
+    // }
 
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
