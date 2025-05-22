@@ -42,5 +42,10 @@ public class User {
     @Column()
     private String profilePictureUrl;
 
+    @Column(length = 1000)
+    private String bio;
+
+    @Column()
+    private String phoneNumber;
     
 }

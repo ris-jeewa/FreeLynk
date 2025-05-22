@@ -44,13 +44,5 @@ public class Freelancer {
     private String portfolioUrl;
 
     @Column()
-    private String bio;
-
-
-    @Column()
-    private String phone;
-
-
-    @Column()
     private List<String> skills;
 }
