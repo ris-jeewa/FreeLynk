@@ -1,7 +1,5 @@
 package com.example.FreeLynk.model;
 
-import java.util.List;
-
 import com.example.FreeLynk.enums.UserRole;
 
 import jakarta.persistence.Column;
