@@ -45,5 +45,8 @@ public class User {
 
     @Column()
     private String phoneNumber;
+
+    @Column(nullable = false)
+    private String password;
     
 }
