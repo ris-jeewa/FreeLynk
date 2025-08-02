@@ -45,9 +45,8 @@ public class AuthService {
             logger.info("Stored password hash: {}", user.getPassword());
             logger.info("Input password: {}", password);
             
-            // For now, using simple string comparison. In production, use passwordEncoder.matches()
-            // boolean passwordMatches = passwordEncoder.matches(password, user.getPassword());
-            boolean passwordMatches = password.equals(user.getPassword());
+            // Use BCrypt password encoder to match plain text password with encoded hash
+            boolean passwordMatches = passwordEncoder.matches(password, user.getPassword());
             logger.info("Password matches: {}", passwordMatches);
             
             if (passwordMatches) {
