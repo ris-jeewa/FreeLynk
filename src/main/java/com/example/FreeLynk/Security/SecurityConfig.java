@@ -12,6 +12,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import org.springframework.security.config.http.SessionCreationPolicy;
 
 @Configuration
 @EnableWebSecurity
@@ -24,8 +25,10 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) // Disable CSRF for API endpoints
             .formLogin(form -> form.disable()) // Disable form login for API
             .httpBasic(basic -> basic.disable()) // Disable HTTP basic auth
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)) // Enable sessions
             .authorizeHttpRequests(registry -> {
                 registry.requestMatchers("/api/auth/**").permitAll(); // Allow all auth endpoints
+                registry.requestMatchers("/api/users/**").permitAll(); // Allow all user endpoints (for now)
                 registry.requestMatchers("/signup").permitAll();
                 registry.requestMatchers("/login").permitAll();
                 registry.anyRequest().authenticated();

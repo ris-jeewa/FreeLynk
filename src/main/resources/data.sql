@@ -23,10 +23,10 @@ ON CONFLICT (email) DO NOTHING;
 
 "$2a$10$b6hL2h3T2YLpkXNhvjVM4etWz4SG3XI39YmgaHVwqTCau4QsYwghi"
 -- Sample Freelancer Profiles
-INSERT INTO freelancer (user_id, title, location, rating, number_of_reviews, github_url, linkedin_url, portfolio_url, skills) VALUES
-(3, 'Senior Full-Stack Developer', 'San Francisco, CA', 4.8, 23, 'https://github.com/mikechen', 'https://linkedin.com/in/mikechen', 'https://mikechen.dev', '["JavaScript", "React", "Node.js", "PostgreSQL", "AWS"]'),
-(4, 'Mobile App Developer & UI/UX Designer', 'New York, NY', 4.9, 18, 'https://github.com/emilydavis', 'https://linkedin.com/in/emilydavis', 'https://emilydavis.design', '["React Native", "Flutter", "Figma", "Adobe XD", "iOS", "Android"]'),
-(5, 'Backend Engineer', 'Austin, TX', 4.7, 15, 'https://github.com/alexrodriguez', 'https://linkedin.com/in/alexrodriguez', 'https://alexrodriguez.dev', '["Java", "Spring Boot", "Microservices", "Docker", "Kubernetes", "PostgreSQL"]')
+INSERT INTO freelancer (user_id, title, location, rating, number_of_reviews, github_url, linked_in_url, portfolio_url, skills) VALUES
+(3, 'Senior Full-Stack Developer', 'San Francisco, CA', 4.8, 23, 'https://github.com/mikechen', 'https://linkedin.com/in/mikechen', 'https://mikechen.dev', '{"JavaScript", "React", "Node.js", "PostgreSQL", "AWS"}'),
+(4, 'Mobile App Developer & UI/UX Designer', 'New York, NY', 4.9, 18, 'https://github.com/emilydavis', 'https://linkedin.com/in/emilydavis', 'https://emilydavis.design', '{"React Native", "Flutter", "Figma", "Adobe XD", "iOS", "Android"}'),
+(5, 'Backend Engineer', 'Austin, TX', 4.7, 15, 'https://github.com/alexrodriguez', 'https://linkedin.com/in/alexrodriguez', 'https://alexrodriguez.dev', '{"Java", "Spring Boot", "Microservices", "Docker", "Kubernetes", "PostgreSQL"}')
 ON CONFLICT (user_id) DO NOTHING;
 
 -- Sample Jobs
