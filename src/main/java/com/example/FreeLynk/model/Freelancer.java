@@ -1,7 +1,6 @@
 package com.example.FreeLynk.model;
 
 import java.util.List;
-import java.util.Vector;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,8 +9,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Freelancer {
     
     @Id
@@ -29,20 +36,20 @@ public class Freelancer {
     private String location;
 
     @Column()
-    private double rating;
+    private Double rating;
     
     @Column()
-    private long numberOfReviews;
+    private Long numberOfReviews;
 
     @Column()
     private String githubUrl;
 
-    @Column()
-    private String linkedInUrl;
+    @Column(name = "linkedin_url")
+    private String linkedinUrl;
 
     @Column()
     private String portfolioUrl;
 
-    @Column()
-    private List<String> skills;
+    @Column(columnDefinition = "jsonb")
+    private Object skills;
 }
