@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.FreeLynk.dto.UserProfileResponse;
 import com.example.FreeLynk.model.User;
 import com.example.FreeLynk.service.UserService;
 
@@ -33,9 +34,10 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<User> getUserProfile(@PathVariable Long userId) {
-        // Add logic to fetch and return user profile
-        return ResponseEntity.ok(userService.getUserProfile(userId));
+    public ResponseEntity<UserProfileResponse> getUserProfile(@PathVariable Long userId) {
+        // Add logic to fetch and return user profile with freelancer info if applicable
+        UserProfileResponse userProfile = userService.getUserProfile(userId);
+        return ResponseEntity.ok(userProfile);
     }
 
     @GetMapping("")
