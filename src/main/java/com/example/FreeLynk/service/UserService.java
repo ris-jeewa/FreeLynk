@@ -70,16 +70,50 @@ public class UserService {
     }
 
     public User updateUserProfile(Long userId, User user) {
-        // Fetch existing user from the repository
-        User existingUser = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        logger.info("Updating user profile for userId: {}", userId);
         
-        // Update the fields of the existing user with the new values
-        existingUser.setName(user.getName());
-        existingUser.setEmail(user.getEmail());
-        existingUser.setProfilePictureUrl(user.getProfilePictureUrl());
+        // Fetch existing user from the repository
+        User existingUser = userRepository.findById(userId)
+            .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        
+        logger.info("Found existing user: {}", existingUser.getName());
+        
+        // Update the fields of the existing user with the new values, only if not null
+        if (user.getName() != null) {
+            existingUser.setName(user.getName());
+            logger.info("Updated name to: {}", user.getName());
+        }
+        
+        if (user.getEmail() != null) {
+            existingUser.setEmail(user.getEmail());
+            logger.info("Updated email to: {}", user.getEmail());
+        }
+        
+        if (user.getProfilePictureUrl() != null) {
+            existingUser.setProfilePictureUrl(user.getProfilePictureUrl());
+            logger.info("Updated profile picture URL");
+        }
+        
+        if (user.getBio() != null) {
+            existingUser.setBio(user.getBio());
+            logger.info("Updated bio");
+        }
+        
+        if (user.getPhoneNumber() != null) {
+            existingUser.setPhoneNumber(user.getPhoneNumber());
+            logger.info("Updated phone number");
+        }
+        
+        if (user.getRole() != null) {
+            existingUser.setRole(user.getRole());
+            logger.info("Updated role to: {}", user.getRole());
+        }
         
         // Save the updated user back to the repository
-        return userRepository.save(existingUser);
+        User savedUser = userRepository.save(existingUser);
+        logger.info("Successfully saved updated user: {}", savedUser.getName());
+        
+        return savedUser;
     }
 
     public User updateUserProfileImage(Long userId, String imageUrl) {
