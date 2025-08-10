@@ -25,7 +25,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) // Disable CSRF for API endpoints
             .formLogin(form -> form.disable()) // Disable form login for API
             .httpBasic(basic -> basic.disable()) // Disable HTTP basic auth
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)) // Enable sessions
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Use stateless sessions for API
             .authorizeHttpRequests(registry -> {
                 registry.requestMatchers("/api/auth/**").permitAll(); // Allow all auth endpoints
                 registry.requestMatchers("/api/users/**").permitAll(); // Allow all user endpoints (for now)
@@ -33,7 +33,7 @@ public class SecurityConfig {
                 registry.requestMatchers("/login").permitAll();
                 registry.anyRequest().authenticated();
             })
-        .build();
+            .build();
     }
     
     @Bean
@@ -45,13 +45,13 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "http://localhost:3000", "http://localhost:8080"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setAllowCredentials(true); // Changed to true to allow credentials
+        configuration.setAllowCredentials(true);
+        configuration.setExposedHeaders(Arrays.asList("Authorization", "Content-Type"));
         
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-    
 }
