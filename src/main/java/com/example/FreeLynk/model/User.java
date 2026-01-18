@@ -37,7 +37,7 @@ public class User {
     @Column()
     private UserRole role;
 
-    @Column(length = 1000)
+    @Column(columnDefinition = "TEXT")
     private String profilePictureUrl;
 
     @Column(length = 1000)
