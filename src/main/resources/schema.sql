@@ -17,7 +17,7 @@ CREATE TABLE users (
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     role VARCHAR(20) CHECK (role IN ('CLIENT', 'FREELANCER')),
-    profile_picture_url VARCHAR(500),
+    profile_picture_url VARCHAR(1000),
     bio VARCHAR(1000),
     phone_number VARCHAR(20),
     password VARCHAR(255) NOT NULL,
