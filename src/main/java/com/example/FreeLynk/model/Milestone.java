@@ -1,6 +1,7 @@
 package com.example.FreeLynk.model;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import com.example.FreeLynk.enums.MilestoneStatus;
 
@@ -26,11 +27,11 @@ import lombok.ToString;
 public class Milestone {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column
-    private Long projectId;
+    private UUID projectId;
 
     @Column
     private String description;
