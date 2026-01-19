@@ -1,6 +1,13 @@
 package com.example.FreeLynk.model;
 
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,8 +28,8 @@ import lombok.Setter;
 public class Freelancer {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -33,6 +40,18 @@ public class Freelancer {
 
     @Column()
     private String location;
+
+    @Column(length = 50)
+    private String timezone;
+
+    @Column(length = 50)
+    private String experienceLevel; // JUNIOR, MID, SENIOR
+
+    @Column(precision = 10, scale = 2)
+    private BigDecimal hourlyRate;
+
+    @Column(length = 50)
+    private String availability;
 
     @Column()
     private Double rating;
@@ -51,4 +70,13 @@ public class Freelancer {
 
     @Column(columnDefinition = "jsonb")
     private Object skills;
+
+    @Column(name = "is_verified", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private Boolean isVerified;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }
