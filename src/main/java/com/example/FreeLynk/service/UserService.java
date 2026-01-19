@@ -2,6 +2,7 @@ package com.example.FreeLynk.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,7 @@ public class UserService {
     @Autowired
     private FreelancerRepository freelancerRepository;
 
-    public UserProfileResponse getUserProfile(Long userId) {
+    public UserProfileResponse getUserProfile(UUID userId) {
         logger.info("Fetching user profile for userId: {}", userId);
         
         // Fetch user from the repository using userId
@@ -51,6 +52,17 @@ public class UserService {
                 return new UserProfileResponse(user, null);
             }
         }
+        // else if (user.getRole() != null && user.getRole().name().equals("CLIENT")) {
+        //     logger.info("User is a client, fetching client profile");
+        //     Optional<Client> client = clientRepository.findByUserId(userId);
+        //     if (client.isPresent()) {
+        //         logger.info("Found client profile for user: {}", user.getName());
+        //         return new UserProfileResponse(user, client.get());
+        //     } else {
+        //         logger.warn("User is marked as client but no client profile found for userId: {}", userId);
+        //         return new UserProfileResponse(user, null);
+        //     }
+        // }
         
         logger.info("User is not a freelancer, returning basic profile");
         // Return regular user profile without freelancer information
@@ -69,7 +81,7 @@ public class UserService {
         return users;
     }
 
-    public User updateUserProfile(Long userId, User user) {
+    public User updateUserProfile(UUID userId, User user) {
         logger.info("Updating user profile for userId: {}", userId);
         
         // Fetch existing user from the repository
@@ -116,7 +128,7 @@ public class UserService {
         return savedUser;
     }
 
-    public User updateUserProfileImage(Long userId, String imageUrl) {
+    public User updateUserProfileImage(UUID userId, String imageUrl) {
         // Fetch existing user from the repository
         User existingUser = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
         
@@ -128,7 +140,7 @@ public class UserService {
     }
 
 
-    public User updateUserProfileAboutMe(Long UserId,User user){
+    public User updateUserProfileAboutMe(UUID UserId,User user){
         User existingUser = userRepository.findById(UserId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
         
         if (user.getEmail() != null)existingUser.setEmail(user.getEmail());
@@ -138,7 +150,7 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
-    public void deleteUser(Long id){
+    public void deleteUser(UUID id){
         userRepository.deleteById(id);
     }
 
