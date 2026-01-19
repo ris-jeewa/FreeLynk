@@ -2,6 +2,7 @@ package com.example.FreeLynk.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,14 +27,14 @@ public class JobService {
         return jobRepository.findAll();
     }
 
-    public Job getJobById(Long id) {
+    public Job getJobById(UUID id) {
         Job jobWithId = jobRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Job Not found for the provided id"));
 
         return jobWithId;
     }
 
-    public Job updateJob(Long id, Job job) {
+    public Job updateJob(UUID id, Job job) {
         Job existingJob = jobRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cannot find a job with the id"));
 
@@ -46,7 +47,7 @@ public class JobService {
         return jobRepository.save(existingJob);
     }
 
-    public ResponseEntity<String> deleteJob(Long id) {
+    public ResponseEntity<String> deleteJob(UUID id) {
         if (jobRepository.existsById(id)) {
             jobRepository.deleteById(id);
             return ResponseEntity.ok("Deleted the Job successfully");
