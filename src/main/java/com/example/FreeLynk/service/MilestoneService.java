@@ -1,6 +1,7 @@
 package com.example.FreeLynk.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,15 +22,15 @@ public class MilestoneService {
         return milestoneRepository.findAll();
     }
 
-    public Milestone getMilestoneById(Long id) {
+    public Milestone getMilestoneById(UUID id) {
         return milestoneRepository.findById(id).orElse(null);
     }
 
-    public List<Milestone> getMilestonesByProjectId(Long projectId) {
+    public List<Milestone> getMilestonesByProjectId(UUID projectId) {
         return milestoneRepository.findByProjectId(projectId);
     }
 
-    public Milestone updateMilestone(Long id, Milestone updatedMilestone) {
+    public Milestone updateMilestone(UUID id, Milestone updatedMilestone) {
         Milestone existing = getMilestoneById(id);
         if (existing != null) {
             existing.setAmount(updatedMilestone.getAmount());
@@ -41,7 +42,7 @@ public class MilestoneService {
         return null;
     }
 
-    public void deleteMilestone(Long id) {
+    public void deleteMilestone(UUID id) {
         milestoneRepository.deleteById(id);
     }
 }
