@@ -1,5 +1,7 @@
 package com.example.FreeLynk.dto;
 
+import java.util.UUID;
+
 import com.example.FreeLynk.model.User;
 import com.example.FreeLynk.model.Freelancer;
 import com.example.FreeLynk.enums.UserRole;
@@ -12,7 +14,7 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserProfileResponse {
-    private Long id;
+    private UUID id;
     private String name;
     private String email;
     private UserRole role;
@@ -54,7 +56,7 @@ public class UserProfileResponse {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class FreelancerProfile {
-        private Long id;
+        private UUID id;
         private String title;
         private String location;
         private Double rating;
