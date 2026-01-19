@@ -1,6 +1,7 @@
 package com.example.FreeLynk.model;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import com.example.FreeLynk.enums.TaskStatus;
 import jakarta.persistence.Column;
@@ -23,8 +24,8 @@ import lombok.Setter;
 public class Job {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(nullable = false)
     private String title;
@@ -39,7 +40,7 @@ public class Job {
     private TaskStatus status = TaskStatus.OPEN;
 
     @Column
-    private Long clientId;
+    private UUID clientId;
 
     @Column
     private LocalDateTime createdAt = LocalDateTime.now();
