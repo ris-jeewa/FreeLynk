@@ -1,6 +1,7 @@
 package com.example.FreeLynk.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,21 +40,21 @@ public class JobController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Job> getjobById(@PathVariable Long id){
+    public ResponseEntity<Job> getjobById(@PathVariable UUID id){
         Job existingJob = jobService.getJobById(id);
 
         return new ResponseEntity<>(existingJob,HttpStatus.ACCEPTED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Job> updateJob(@PathVariable Long id,@RequestBody Job job){
+    public ResponseEntity<Job> updateJob(@PathVariable UUID id,@RequestBody Job job){
         Job updatedJob = jobService.updateJob(id,job);
 
         return new ResponseEntity<>(updatedJob,HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteJob(@PathVariable Long id){
+    public ResponseEntity<String> deleteJob(@PathVariable UUID id){
         return jobService.deleteJob(id);
     }
 }
