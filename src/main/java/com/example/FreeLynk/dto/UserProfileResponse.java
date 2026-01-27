@@ -1,5 +1,4 @@
 package com.example.FreeLynk.dto;
-
 import java.util.UUID;
 
 import com.example.FreeLynk.model.User;
@@ -14,6 +13,7 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserProfileResponse {
+    
     private UUID id;
     private String name;
     private String email;
@@ -21,7 +21,7 @@ public class UserProfileResponse {
     private String profilePictureUrl;
     private String bio;
     private String phoneNumber;
-    private FreelancerProfile freelancerProfile;
+    private Freelancer freelancerProfile;
 
     // Constructor for regular user
     public UserProfileResponse(User user) {
@@ -46,36 +46,10 @@ public class UserProfileResponse {
         this.phoneNumber = user.getPhoneNumber();
         
         if (freelancer != null) {
-            this.freelancerProfile = new FreelancerProfile(freelancer);
+            this.freelancerProfile = freelancer;
         } else {
             this.freelancerProfile = null;
         }
     }
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class FreelancerProfile {
-        private UUID id;
-        private String title;
-        private String location;
-        private Double rating;
-        private Long numberOfReviews;
-        private String githubUrl;
-        private String linkedinUrl;
-        private String portfolioUrl;
-        private Object skills; // JSON object for skills
-
-        public FreelancerProfile(Freelancer freelancer) {
-            this.id = freelancer.getId();
-            this.title = freelancer.getTitle();
-            this.location = freelancer.getLocation();
-            this.rating = freelancer.getRating();
-            this.numberOfReviews = freelancer.getNumberOfReviews();
-            this.githubUrl = freelancer.getGithubUrl();
-            this.linkedinUrl = freelancer.getLinkedinUrl();
-            this.portfolioUrl = freelancer.getPortfolioUrl();
-            this.skills = freelancer.getSkills();
-        }
-    }
 } 
