@@ -8,13 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.FreeLynk.model.Freelancer;
+import com.example.FreeLynk.model.User;
 import com.example.FreeLynk.repository.FreelancerRepository;
+import com.example.FreeLynk.repository.UserRepository;
 
 @Service
 public class FreelancerService {
 
     @Autowired
     private FreelancerRepository freelancerRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     // Get all freelancers
     public List<Freelancer> getAllFreelancers() {
@@ -33,6 +38,12 @@ public class FreelancerService {
 
     // Create a new freelancer
     public Freelancer createFreelancer(Freelancer freelancer) {
+        // Fetch the complete user from database if user ID is provided
+        if (freelancer.getUser() != null && freelancer.getUser().getId() != null) {
+            User user = userRepository.findById(freelancer.getUser().getId())
+                    .orElseThrow(() -> new RuntimeException("User not found with id: " + freelancer.getUser().getId()));
+            freelancer.setUser(user);
+        }
         return freelancerRepository.save(freelancer);
     }
 
