@@ -1,5 +1,7 @@
 package com.example.FreeLynk.model;
 
+import java.util.UUID;
+
 import com.example.FreeLynk.enums.UserRole;
 
 import jakarta.persistence.Column;
@@ -24,8 +26,8 @@ import lombok.Setter;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(nullable = false)
     private String name;
@@ -37,7 +39,7 @@ public class User {
     @Column()
     private UserRole role;
 
-    @Column()
+    @Column(columnDefinition = "TEXT")
     private String profilePictureUrl;
 
     @Column(length = 1000)

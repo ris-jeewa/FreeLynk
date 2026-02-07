@@ -1,0 +1,645 @@
+{
+	"info": {
+		"_postman_id": "freelynk-api-collection",
+		"name": "FreeLynk API",
+		"description": "Postman collection for FreeLynk freelancing platform API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "userId",
+			"value": ""
+		},
+		{
+			"key": "jobId",
+			"value": ""
+		},
+		{
+			"key": "freelancerId",
+			"value": ""
+		},
+		{
+			"key": "projectId",
+			"value": ""
+		},
+		{
+			"key": "milestoneId",
+			"value": ""
+		},
+		{
+			"key": "jobApplicationId",
+			"value": ""
+		}
+	],
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"FREELANCER\",\n  \"bio\": \"Experienced developer\",\n  \"phoneNumber\": \"+1234567890\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users"]
+						},
+						"description": "Create a new user. Role: CLIENT or FREELANCER"
+					}
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/users",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users"]
+						},
+						"description": "Get list of all users"
+					}
+				},
+				{
+					"name": "Get User Profile",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/users/{{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "{{userId}}"]
+						},
+						"description": "Get user profile with freelancer info if applicable"
+					}
+				},
+				{
+					"name": "Update User Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe Updated\",\n  \"email\": \"john.updated@example.com\",\n  \"bio\": \"Updated bio\",\n  \"phoneNumber\": \"+1987654321\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/{{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "{{userId}}"]
+						},
+						"description": "Update user profile (partial update supported)"
+					}
+				},
+				{
+					"name": "Update User Profile Image",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\"https://example.com/profile-image.png\""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/{{userId}}/image",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "{{userId}}", "image"]
+						},
+						"description": "Update user profile picture URL. Send URL as JSON string."
+					}
+				},
+				{
+					"name": "Update User About Me",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"john@example.com\",\n  \"bio\": \"About me text\",\n  \"phoneNumber\": \"+1234567890\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/{{userId}}/aboutme",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "{{userId}}", "aboutme"]
+						},
+						"description": "Update user about me section (email, bio, phone)"
+					}
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"url": {
+							"raw": "{{baseUrl}}/api/users/{{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "{{userId}}"]
+						},
+						"description": "Delete a user by ID"
+					}
+				}
+			]
+		},
+		{
+			"name": "Freelancers",
+			"item": [
+				{
+					"name": "Create Freelancer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user\": { \"id\": \"{{userId}}\" },\n  \"title\": \"Full Stack Developer\",\n  \"location\": \"New York, NY\",\n  \"timezone\": \"America/New_York\",\n  \"experienceLevel\": \"SENIOR\",\n  \"hourlyRate\": 75.00,\n  \"availability\": \"FULL_TIME\",\n  \"rating\": 4.8,\n  \"numberOfReviews\": 15,\n  \"githubUrl\": \"https://github.com/username\",\n  \"linkedinUrl\": \"https://linkedin.com/in/username\",\n  \"portfolioUrl\": \"https://portfolio.example.com\",\n  \"skills\": {\"languages\": [\"Java\", \"JavaScript\"], \"frameworks\": [\"Spring Boot\", \"React\"]},\n  \"isVerified\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/freelancers",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "freelancers"]
+						},
+						"description": "Create freelancer profile. User must exist first. Replace {{userId}} with existing user UUID."
+					}
+				},
+				{
+					"name": "Get All Freelancers",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/freelancers",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "freelancers"]
+						},
+						"description": "Get list of all freelancers"
+					}
+				},
+				{
+					"name": "Get Freelancer by ID",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/freelancers/{{freelancerId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "freelancers", "{{freelancerId}}"]
+						},
+						"description": "Get freelancer by ID"
+					}
+				},
+				{
+					"name": "Get Freelancer by User ID",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/freelancers/user/{{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "freelancers", "user", "{{userId}}"]
+						},
+						"description": "Get freelancer profile by user UUID"
+					}
+				},
+				{
+					"name": "Update Freelancer",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Senior Full Stack Developer\",\n  \"location\": \"San Francisco, CA\",\n  \"hourlyRate\": 85.00,\n  \"availability\": \"PART_TIME\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/freelancers/{{freelancerId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "freelancers", "{{freelancerId}}"]
+						},
+						"description": "Update freelancer profile"
+					}
+				},
+				{
+					"name": "Delete Freelancer",
+					"request": {
+						"method": "DELETE",
+						"url": {
+							"raw": "{{baseUrl}}/api/freelancers/{{freelancerId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "freelancers", "{{freelancerId}}"]
+						},
+						"description": "Delete freelancer profile"
+					}
+				}
+			]
+		},
+		{
+			"name": "Jobs",
+			"item": [
+				{
+					"name": "Create Job",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Build REST API\",\n  \"description\": \"Need a REST API with Spring Boot\",\n  \"budget\": 1500.00,\n  \"status\": \"OPEN\",\n  \"clientId\": \"{{userId}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/jobs",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "jobs"]
+						},
+						"description": "Create a new job. clientId must be existing user UUID. Status: OPEN, IN_PROGRESS, COMPLETED, CANCELLED"
+					}
+				},
+				{
+					"name": "Get All Jobs",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/jobs",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "jobs"]
+						},
+						"description": "Get list of all jobs"
+					}
+				},
+				{
+					"name": "Get Job by ID",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/jobs/{{jobId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "jobs", "{{jobId}}"]
+						},
+						"description": "Get job by ID"
+					}
+				},
+				{
+					"name": "Update Job",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Build REST API - Updated\",\n  \"description\": \"Updated description\",\n  \"budget\": 2000.00,\n  \"status\": \"IN_PROGRESS\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/jobs/{{jobId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "jobs", "{{jobId}}"]
+						},
+						"description": "Update a job"
+					}
+				},
+				{
+					"name": "Delete Job",
+					"request": {
+						"method": "DELETE",
+						"url": {
+							"raw": "{{baseUrl}}/api/jobs/{{jobId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "jobs", "{{jobId}}"]
+						},
+						"description": "Delete a job"
+					}
+				}
+			]
+		},
+		{
+			"name": "Job Applications",
+			"item": [
+				{
+					"name": "Create Job Application",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"jobId\": \"{{jobId}}\",\n  \"freelancerId\": \"{{userId}}\",\n  \"proposal\": \"I have extensive experience with Spring Boot.\",\n  \"bidAmount\": 1400.00,\n  \"status\": \"PENDING\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/job-applications",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "job-applications"]
+						},
+						"description": "Apply for a job. jobId and freelancerId are UUIDs. Status: PENDING, ACCEPTED, REJECTED"
+					}
+				},
+				{
+					"name": "Get All Job Applications",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/job-applications",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "job-applications"]
+						},
+						"description": "Get list of all job applications"
+					}
+				},
+				{
+					"name": "Get Job Application by ID",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/job-applications/{{jobApplicationId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "job-applications", "{{jobApplicationId}}"]
+						},
+						"description": "Get job application by ID"
+					}
+				},
+				{
+					"name": "Update Job Application",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"proposal\": \"Updated proposal text\",\n  \"bidAmount\": 1300.00,\n  \"status\": \"ACCEPTED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/job-applications/{{jobApplicationId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "job-applications", "{{jobApplicationId}}"]
+						},
+						"description": "Update job application"
+					}
+				},
+				{
+					"name": "Delete Job Application",
+					"request": {
+						"method": "DELETE",
+						"url": {
+							"raw": "{{baseUrl}}/api/job-applications/{{jobApplicationId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "job-applications", "{{jobApplicationId}}"]
+						},
+						"description": "Delete job application"
+					}
+				}
+			]
+		},
+		{
+			"name": "Projects",
+			"item": [
+				{
+					"name": "Create Project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"jobId\": \"{{jobId}}\",\n  \"freelancerId\": \"{{freelancerId}}\",\n  \"clientId\": \"{{userId}}\",\n  \"status\": \"IN_PROGRESS\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/projects",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "projects"]
+						},
+						"description": "Create a project. Status: IN_PROGRESS, COMPLETED, DISPUTED"
+					}
+				},
+				{
+					"name": "Get All Projects",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/projects",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "projects"]
+						},
+						"description": "Get list of all projects"
+					}
+				},
+				{
+					"name": "Get Project by ID",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/projects/{{projectId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "projects", "{{projectId}}"]
+						},
+						"description": "Get project by ID"
+					}
+				},
+				{
+					"name": "Update Project",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"jobId\": \"{{jobId}}\",\n  \"freelancerId\": \"{{freelancerId}}\",\n  \"clientId\": \"{{userId}}\",\n  \"status\": \"COMPLETED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/projects/{{projectId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "projects", "{{projectId}}"]
+						},
+						"description": "Update project"
+					}
+				},
+				{
+					"name": "Delete Project",
+					"request": {
+						"method": "DELETE",
+						"url": {
+							"raw": "{{baseUrl}}/api/projects/{{projectId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "projects", "{{projectId}}"]
+						},
+						"description": "Delete project"
+					}
+				}
+			]
+		},
+		{
+			"name": "Milestones",
+			"item": [
+				{
+					"name": "Create Milestone",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"projectId\": \"{{projectId}}\",\n  \"description\": \"Complete API design\",\n  \"amount\": 500.00,\n  \"status\": \"PENDING\",\n  \"dueDate\": \"2025-02-28T23:59:59\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/milestones",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "milestones"]
+						},
+						"description": "Create milestone. Status: PENDING, COMPLETED, CANCELLED"
+					}
+				},
+				{
+					"name": "Get All Milestones",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/milestones",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "milestones"]
+						},
+						"description": "Get list of all milestones"
+					}
+				},
+				{
+					"name": "Get Milestone by ID",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/milestones/{{milestoneId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "milestones", "{{milestoneId}}"]
+						},
+						"description": "Get milestone by ID"
+					}
+				},
+				{
+					"name": "Get Milestones by Project ID",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/api/milestones/project/{{projectId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "milestones", "project", "{{projectId}}"]
+						},
+						"description": "Get all milestones for a project"
+					}
+				},
+				{
+					"name": "Update Milestone",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"description\": \"Complete API design - Updated\",\n  \"amount\": 550.00,\n  \"status\": \"COMPLETED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/milestones/{{milestoneId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "milestones", "{{milestoneId}}"]
+						},
+						"description": "Update milestone"
+					}
+				},
+				{
+					"name": "Delete Milestone",
+					"request": {
+						"method": "DELETE",
+						"url": {
+							"raw": "{{baseUrl}}/api/milestones/{{milestoneId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "milestones", "{{milestoneId}}"]
+						},
+						"description": "Delete milestone"
+					}
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "Create Payment Intent",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"amount\": 1000,\n  \"currency\": \"usd\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/payment/create-payment-intent",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "payment", "create-payment-intent"]
+						},
+						"description": "Create Stripe payment intent. Amount in cents (e.g. 1000 = $10.00)"
+					}
+				}
+			]
+		}
+	]
+}

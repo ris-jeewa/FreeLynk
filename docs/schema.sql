@@ -13,11 +13,11 @@ DROP TABLE IF EXISTS users CASCADE;
 
 -- Create users table
 CREATE TABLE users (
-    id BIGSERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     role VARCHAR(20) CHECK (role IN ('CLIENT', 'FREELANCER')),
-    profile_picture_url VARCHAR(500),
+    profile_picture_url TEXT,
     bio VARCHAR(1000),
     phone_number VARCHAR(20),
     password VARCHAR(255) NOT NULL,
@@ -27,12 +27,12 @@ CREATE TABLE users (
 
 -- Create jobs table
 CREATE TABLE jobs (
-    id BIGSERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title VARCHAR(255) NOT NULL,
     description TEXT,
     budget DECIMAL(10,2) NOT NULL CHECK (budget > 0),
     status VARCHAR(20) DEFAULT 'OPEN' CHECK (status IN ('OPEN', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED')),
-    client_id BIGINT NOT NULL,
+    client_id UUID NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (client_id) REFERENCES users(id) ON DELETE CASCADE
@@ -40,9 +40,9 @@ CREATE TABLE jobs (
 
 -- Create job_applications table
 CREATE TABLE job_applications (
-    id BIGSERIAL PRIMARY KEY,
-    job_id BIGINT NOT NULL,
-    freelancer_id BIGINT NOT NULL,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    job_id UUID NOT NULL,
+    freelancer_id UUID NOT NULL,
     proposal TEXT,
     bid_amount DECIMAL(10,2) CHECK (bid_amount > 0),
     status VARCHAR(20) DEFAULT 'PENDING' CHECK (status IN ('PENDING', 'ACCEPTED', 'REJECTED')),
@@ -54,10 +54,10 @@ CREATE TABLE job_applications (
 
 -- Create projects table
 CREATE TABLE projects (
-    id BIGSERIAL PRIMARY KEY,
-    job_id BIGINT NOT NULL,
-    freelancer_id BIGINT NOT NULL,
-    client_id BIGINT NOT NULL,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    job_id UUID NOT NULL,
+    freelancer_id UUID NOT NULL,
+    client_id UUID NOT NULL,
     status VARCHAR(20) DEFAULT 'IN_PROGRESS' CHECK (status IN ('IN_PROGRESS', 'COMPLETED', 'DISPUTED')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -69,8 +69,8 @@ CREATE TABLE projects (
 
 -- Create milestones table
 CREATE TABLE milestones (
-    id BIGSERIAL PRIMARY KEY,
-    project_id BIGINT NOT NULL,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    project_id UUID NOT NULL,
     description TEXT NOT NULL,
     amount DECIMAL(10,2) NOT NULL CHECK (amount > 0),
     status VARCHAR(20) DEFAULT 'PENDING' CHECK (status IN ('PENDING', 'COMPLETED', 'CANCELLED')),
@@ -81,10 +81,10 @@ CREATE TABLE milestones (
 
 -- Create payments table
 CREATE TABLE payments (
-    id BIGSERIAL PRIMARY KEY,
-    project_id BIGINT NOT NULL,
-    client_id BIGINT NOT NULL,
-    freelancer_id BIGINT NOT NULL,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    project_id UUID NOT NULL,
+    client_id UUID NOT NULL,
+    freelancer_id UUID NOT NULL,
     amount DECIMAL(10,2) NOT NULL CHECK (amount > 0),
     status VARCHAR(20) DEFAULT 'ESCROW' CHECK (status IN ('ESCROW', 'RELEASED', 'REFUNDED')),
     stripe_payment_id VARCHAR(255) UNIQUE,
@@ -97,8 +97,8 @@ CREATE TABLE payments (
 
 -- Create freelancer table
 CREATE TABLE freelancer (
-    id BIGSERIAL PRIMARY KEY,
-    user_id BIGINT NOT NULL UNIQUE,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL UNIQUE,
     title VARCHAR(255),
     location VARCHAR(255),
     rating DECIMAL(3,2) DEFAULT 0.0 CHECK (rating >= 0 AND rating <= 5),
@@ -114,7 +114,7 @@ CREATE TABLE freelancer (
 
 -- Create auth table (legacy/backup table)
 CREATE TABLE auth (
-    id BIGSERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255),
     email VARCHAR(255) UNIQUE,
     password VARCHAR(255),
@@ -168,27 +168,27 @@ CREATE TRIGGER update_freelancer_updated_at BEFORE UPDATE ON freelancer
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 -- Insert sample data (optional - for development)
--- Sample users
-INSERT INTO users (name, email, role, password) VALUES
-('John Client', 'john.client@example.com', 'CLIENT', '$2a$10$encoded_password_hash'),
-('Jane Freelancer', 'jane.freelancer@example.com', 'FREELANCER', '$2a$10$encoded_password_hash'),
-('Bob Developer', 'bob.developer@example.com', 'FREELANCER', '$2a$10$encoded_password_hash');
+-- Sample users (Note: UUIDs will be auto-generated, so these inserts need actual UUIDs or should be removed)
+-- INSERT INTO users (name, email, role, password) VALUES
+-- ('John Client', 'john.client@example.com', 'CLIENT', '$2a$10$encoded_password_hash'),
+-- ('Jane Freelancer', 'jane.freelancer@example.com', 'FREELANCER', '$2a$10$encoded_password_hash'),
+-- ('Bob Developer', 'bob.developer@example.com', 'FREELANCER', '$2a$10$encoded_password_hash');
 
--- Sample freelancer profile
-INSERT INTO freelancer (user_id, title, location, rating, number_of_reviews, skills) VALUES
-(2, 'Full Stack Developer', 'New York, NY', 4.8, 15, '["Java", "Spring Boot", "React", "PostgreSQL"]'),
-(3, 'Mobile App Developer', 'San Francisco, CA', 4.9, 23, '["React Native", "Flutter", "iOS", "Android"]');
+-- Sample freelancer profile (Note: Requires actual UUIDs from users table)
+-- INSERT INTO freelancer (user_id, title, location, rating, number_of_reviews, skills) VALUES
+-- (<user_uuid>, 'Full Stack Developer', 'New York, NY', 4.8, 15, '["Java", "Spring Boot", "React", "PostgreSQL"]'),
+-- (<user_uuid>, 'Mobile App Developer', 'San Francisco, CA', 4.9, 23, '["React Native", "Flutter", "iOS", "Android"]');
 
--- Sample jobs
-INSERT INTO jobs (title, description, budget, client_id) VALUES
-('Build a REST API', 'Need a REST API built with Spring Boot and PostgreSQL', 1500.00, 1),
-('Mobile App Development', 'Looking for a React Native developer to build a mobile app', 3000.00, 1);
+-- Sample jobs (Note: Requires actual UUIDs from users table)
+-- INSERT INTO jobs (title, description, budget, client_id) VALUES
+-- ('Build a REST API', 'Need a REST API built with Spring Boot and PostgreSQL', 1500.00, <client_uuid>),
+-- ('Mobile App Development', 'Looking for a React Native developer to build a mobile app', 3000.00, <client_uuid>);
 
--- Sample job applications
-INSERT INTO job_applications (job_id, freelancer_id, proposal, bid_amount) VALUES
-(1, 2, 'I have extensive experience with Spring Boot and can deliver this project within 2 weeks.', 1400.00),
-(1, 3, 'I can build this API with modern best practices and comprehensive testing.', 1600.00),
-(2, 3, 'I specialize in React Native and have built similar apps before.', 2800.00);
+-- Sample job applications (Note: Requires actual UUIDs from jobs and users tables)
+-- INSERT INTO job_applications (job_id, freelancer_id, proposal, bid_amount) VALUES
+-- (<job_uuid>, <freelancer_uuid>, 'I have extensive experience with Spring Boot and can deliver this project within 2 weeks.', 1400.00),
+-- (<job_uuid>, <freelancer_uuid>, 'I can build this API with modern best practices and comprehensive testing.', 1600.00),
+-- (<job_uuid>, <freelancer_uuid>, 'I specialize in React Native and have built similar apps before.', 2800.00);
 
 -- Comments explaining the schema
 COMMENT ON TABLE users IS 'Stores user account information for both clients and freelancers';

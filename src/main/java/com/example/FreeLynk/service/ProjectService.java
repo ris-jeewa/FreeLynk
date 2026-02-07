@@ -2,6 +2,7 @@ package com.example.FreeLynk.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,12 +27,12 @@ public class ProjectService {
     }
 
     // Get project by ID
-    public Optional<Project> getProjectById(Long id) {
+    public Optional<Project> getProjectById(UUID id) {
         return projectRepository.findById(id);
     }
 
     // Update project
-    public Project updateProject(Long id, Project updatedProject) {
+    public Project updateProject(UUID id, Project updatedProject) {
         return projectRepository.findById(id).map(project -> {
             project.setJobId(updatedProject.getJobId());
             project.setFreelancerId(updatedProject.getFreelancerId());
@@ -43,7 +44,7 @@ public class ProjectService {
     }
 
     // Delete project
-    public void deleteProject(Long id) {
+    public void deleteProject(UUID id) {
         projectRepository.deleteById(id);
     }
 }

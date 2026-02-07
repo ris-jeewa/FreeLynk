@@ -1,5 +1,6 @@
 package com.example.FreeLynk.model;
 
+import java.util.UUID;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -9,8 +10,8 @@ import lombok.Data;
 public class Payment {
     
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
 
     private String paymentIntentId;
