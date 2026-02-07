@@ -2,6 +2,7 @@ package com.example.FreeLynk.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,13 +37,13 @@ public JobApplication createJobApplication(JobApplication job) {
         return jobAppRepository.findAll();
     }
 
-    public JobApplication getJobApplication(Long id){
+    public JobApplication getJobApplication(UUID id){
         JobApplication jobApp = jobAppRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No Job Application Found"));
 
         return jobApp;
     }
 
-    public JobApplication updateJobApplication(Long id, JobApplication jobAppDetails){
+    public JobApplication updateJobApplication(UUID id, JobApplication jobAppDetails){
         JobApplication existingJobApp = jobAppRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No Job Application Found"));
 
         existingJobApp.setProposal(jobAppDetails.getProposal());
@@ -53,7 +54,7 @@ public JobApplication createJobApplication(JobApplication job) {
         return jobAppRepository.save(existingJobApp);
     }
 
-    public void deleteJobApplication(Long id){
+    public void deleteJobApplication(UUID id){
         JobApplication existingJobApp = jobAppRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No Job Application Found"));
 
         jobAppRepository.delete(existingJobApp);

@@ -1,6 +1,7 @@
 package com.example.FreeLynk.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,24 +35,24 @@ public class MilestoneController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Milestone> getMilestoneById(@PathVariable Long id) {
+    public ResponseEntity<Milestone> getMilestoneById(@PathVariable UUID id) {
         Milestone milestone = milestoneService.getMilestoneById(id);
         return milestone != null ? ResponseEntity.ok(milestone) : ResponseEntity.notFound().build();
     }
 
     @GetMapping("/project/{projectId}")
-    public ResponseEntity<List<Milestone>> getByProjectId(@PathVariable Long projectId) {
+    public ResponseEntity<List<Milestone>> getByProjectId(@PathVariable UUID projectId) {
         return ResponseEntity.ok(milestoneService.getMilestonesByProjectId(projectId));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Milestone> updateMilestone(@PathVariable Long id, @RequestBody Milestone milestone) {
+    public ResponseEntity<Milestone> updateMilestone(@PathVariable UUID id, @RequestBody Milestone milestone) {
         Milestone updated = milestoneService.updateMilestone(id, milestone);
         return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMilestone(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteMilestone(@PathVariable UUID id) {
         milestoneService.deleteMilestone(id);
         return ResponseEntity.noContent().build();
     }
