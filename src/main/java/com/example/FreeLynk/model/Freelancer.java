@@ -1,12 +1,14 @@
 package com.example.FreeLynk.model;
 
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +28,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Freelancer {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -55,7 +57,7 @@ public class Freelancer {
 
     @Column()
     private Double rating;
-    
+
     @Column()
     private Long numberOfReviews;
 
@@ -68,8 +70,9 @@ public class Freelancer {
     @Column()
     private String portfolioUrl;
 
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    private Object skills;
+    private Map<String, Object> skills;
 
     @Column(name = "is_verified", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private Boolean isVerified;
