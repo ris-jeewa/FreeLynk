@@ -9,7 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.springframework.security.oauth2.jwt.Jwt;
+
 import com.example.FreeLynk.dto.UserProfileResponse;
+import com.example.FreeLynk.enums.UserRole;
 import com.example.FreeLynk.exception.ResourceNotFoundException;
 import com.example.FreeLynk.model.User;
 import com.example.FreeLynk.model.Freelancer;
@@ -67,6 +70,23 @@ public class UserService {
         logger.info("User is not a freelancer, returning basic profile");
         // Return regular user profile without freelancer information
         return new UserProfileResponse(user);
+    }
+
+    public User findOrCreateFromJwt(Jwt jwt) {
+        String auth0Id = jwt.getSubject();
+        return userRepository.findByAuth0Id(auth0Id).orElseGet(() -> {
+            User newUser = new User();
+            newUser.setAuth0Id(auth0Id);
+            newUser.setEmail(jwt.getClaimAsString("email"));
+            newUser.setName(jwt.getClaimAsString("name"));
+            List<String> roles = jwt.getClaimAsStringList("https://freelynk-api/roles");
+            if (roles != null && !roles.isEmpty()) {
+                try {
+                    newUser.setRole(UserRole.valueOf(roles.get(0).toUpperCase()));
+                } catch (IllegalArgumentException ignored) {}
+            }
+            return userRepository.save(newUser);
+        });
     }
 
     public User createUserProfile(User user){
