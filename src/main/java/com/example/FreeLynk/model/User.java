@@ -29,10 +29,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(unique = true)
+    private String auth0Id; 
+
+    @Column(nullable = true)
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = true, unique = true)
     private String email;
 
     @Enumerated(EnumType.STRING)
@@ -48,7 +51,7 @@ public class User {
     @Column()
     private String phoneNumber;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String password;
     
 }
