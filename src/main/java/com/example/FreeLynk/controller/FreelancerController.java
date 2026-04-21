@@ -29,7 +29,7 @@ public class FreelancerController {
 
     // GET ALL FREELANCERS
     @GetMapping("")
-    @PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Freelancer>> getAllFreelancers() {
         List<Freelancer> freelancers = freelancerService.getAllFreelancers();
         return ResponseEntity.ok(freelancers);
