@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.FreeLynk.dto.FreelancerCreateRequest;
 import com.example.FreeLynk.model.Freelancer;
 import com.example.FreeLynk.model.User;
 import com.example.FreeLynk.repository.FreelancerRepository;
@@ -36,12 +37,51 @@ public class FreelancerService {
         return freelancerRepository.findByUserId(userId);
     }
 
+    // Create a new freelancer from flat request payload
+    public Freelancer createFreelancerFromRequest(FreelancerCreateRequest request) {
+        System.out.println(">>> FreelancerCreateRequest id=" + request.getId() + " name=" + request.getName());
+        UUID userId = request.getId();
+        if (userId == null) throw new RuntimeException("User id is required");
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+
+        if (request.getName() != null) {
+            user.setName(request.getName());
+            user = userRepository.save(user);
+        }
+
+        Freelancer freelancer = new Freelancer();
+        freelancer.setUser(user);
+        freelancer.setTitle(request.getTitle());
+        freelancer.setLocation(request.getLocation());
+        freelancer.setTimezone(request.getTimezone());
+        freelancer.setExperienceLevel(request.getExperienceLevel());
+        freelancer.setHourlyRate(request.getHourlyRate());
+        freelancer.setAvailability(request.getAvailability());
+        freelancer.setGithubUrl(request.getGithubUrl());
+        freelancer.setLinkedinUrl(request.getLinkedinUrl());
+        freelancer.setPortfolioUrl(request.getPortfolioUrl());
+        freelancer.setSkills(request.getSkills());
+
+        return freelancerRepository.save(freelancer);
+    }
+
     // Create a new freelancer
     public Freelancer createFreelancer(Freelancer freelancer) {
-        // Fetch the complete user from database if user ID is provided
-        if (freelancer.getUser() != null && freelancer.getUser().getId() != null) {
-            User user = userRepository.findById(freelancer.getUser().getId())
-                    .orElseThrow(() -> new RuntimeException("User not found with id: " + freelancer.getUser().getId()));
+        // Handle user creation or fetching
+        if (freelancer.getUser() != null) {
+            User providedUser = freelancer.getUser();
+            User user;
+            if (providedUser.getId() != null) {
+                user = userRepository.findById(providedUser.getId())
+                        .orElseThrow(() -> new RuntimeException("User not found with id: " + providedUser.getId()));
+            } else if (providedUser.getAuth0Id() != null) {
+                user = userRepository.findByAuth0Id(providedUser.getAuth0Id())
+                        .orElseGet(() -> userRepository.save(providedUser));
+            } else {
+                // If no ID or auth0Id, save the provided user as new
+                user = userRepository.save(providedUser);
+            }
             freelancer.setUser(user);
         }
         return freelancerRepository.save(freelancer);

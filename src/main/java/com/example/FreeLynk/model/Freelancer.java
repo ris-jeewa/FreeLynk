@@ -74,7 +74,7 @@ public class Freelancer {
     @Column(columnDefinition = "jsonb")
     private Map<String, Object> skills;
 
-    @Column(name = "is_verified", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    @Column(name = "is_verified", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private Boolean isVerified;
 
     @CreationTimestamp

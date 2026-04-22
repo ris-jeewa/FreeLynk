@@ -6,6 +6,8 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,6 +41,13 @@ public class UserController {
         UserProfileResponse userProfile = userService.getUserProfile(userId);
         return ResponseEntity.ok(userProfile);
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<User> getMe(@AuthenticationPrincipal Jwt jwt) {
+        User user = userService.findOrCreateFromJwt(jwt);
+        return ResponseEntity.ok(user);
+    }
+
 
     @GetMapping("")
     public ResponseEntity<List<User>> getAllUsers(){
